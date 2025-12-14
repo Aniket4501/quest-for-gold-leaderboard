@@ -163,8 +163,7 @@ body {
     transform: translate(-50%, -50%);
     width: 92%;
     max-width: 1600px;
-    height: 95vh;
-    max-height: 95vh;
+    max-height: 100vh;
     z-index: 3;
     
     /* Scroll/parchment styling */
@@ -188,12 +187,14 @@ body {
         inset 0 0 60px rgba(139, 111, 71, 0.1),
         0 20px 80px var(--shadow-medium);
     
-    /* Internal padding and layout */
-    padding: var(--spacing-md) var(--spacing-md);
+    /* Flexbox layout - MANDATORY for zoom resilience */
     display: flex;
     flex-direction: column;
+    overflow: hidden;
+    
+    /* Internal padding */
+    padding: var(--spacing-md) var(--spacing-md);
     gap: var(--spacing-sm);
-    overflow: hidden; /* Single screen, no scrolling */
 }
 
 /* Fallback scroll border if image doesn't exist */
@@ -504,6 +505,31 @@ body {
 }
 
 /* ============================================
+   PARCHMENT SECTIONS (Flexbox Layout)
+   ============================================ */
+.parchment-top-section {
+    flex-shrink: 0;
+    position: relative;
+    z-index: 5;
+}
+
+.parchment-middle-section {
+    flex-shrink: 0;
+    position: relative;
+    z-index: 5;
+}
+
+.parchment-bottom-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    position: relative;
+    z-index: 5;
+    overflow: hidden;
+}
+
+/* ============================================
    LEADERBOARD SECTION (Grid-Based Layout)
    ============================================ */
 .leaderboard-section {
@@ -511,9 +537,11 @@ body {
     padding: var(--spacing-xs) 0;
     position: relative;
     z-index: 5;
-    overflow: visible;
-    min-height: auto;
-    max-height: none;
+    overflow-y: auto;
+    overflow-x: hidden;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Dedicated Panel Container - MANDATORY */
@@ -524,6 +552,35 @@ body {
     margin-top: 24px;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Data Rows Container */
+.leaderboard-body {
+    padding-right: 8px;
+}
+
+/* Custom Scrollbar Styling (Optional UI Polish) */
+.leaderboard-section::-webkit-scrollbar {
+    width: 6px;
+}
+
+.leaderboard-section::-webkit-scrollbar-track {
+    background: rgba(232, 213, 163, 0.3);
+    border-radius: 4px;
+}
+
+.leaderboard-section::-webkit-scrollbar-thumb {
+    background: rgba(160, 120, 60, 0.6);
+    border-radius: 4px;
+}
+
+.leaderboard-section::-webkit-scrollbar-thumb:hover {
+    background: rgba(160, 120, 60, 0.8);
+}
+
+.leaderboard-section {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(160, 120, 60, 0.6) rgba(232, 213, 163, 0.3);
 }
 
 /* CSS Grid Row - MANDATORY for alignment */
@@ -543,6 +600,12 @@ body {
     padding-bottom: 8px;
     margin-bottom: 8px;
     font-family: var(--font-title);
+    position: sticky;
+    top: 0;
+    background: rgba(255, 244, 210, 0.95);
+    z-index: 10;
+    padding-top: 8px;
+    margin-top: -8px;
 }
 
 /* Data Rows - Readability */
@@ -601,6 +664,7 @@ body {
     padding: var(--spacing-xs) 0;
     position: relative;
     z-index: 5;
+    flex-shrink: 0;
 }
 
 .coin-pile {
@@ -721,7 +785,7 @@ body {
 @media (max-width: 768px) {
     .parchment-scroll {
         width: 98%;
-        max-height: 95vh;
+        max-height: 100vh;
         padding: var(--spacing-md);
     }
     
@@ -769,5 +833,109 @@ body {
     .leaderboard-header {
         font-size: 12px;
     }
+}
+
+/* ============================================
+   CSV UPLOADER
+   ============================================ */
+.csv-uploader {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+    background: rgba(255, 244, 210, 0.95);
+    border: 2px solid var(--gold-primary);
+    border-radius: 8px;
+    padding: 12px;
+    box-shadow: 0 4px 12px var(--shadow-medium);
+}
+
+.csv-uploader-password {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+    background: rgba(255, 244, 210, 0.95);
+    border: 2px solid var(--gold-primary);
+    border-radius: 8px;
+    padding: 12px;
+    box-shadow: 0 4px 12px var(--shadow-medium);
+}
+
+.password-form {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.password-input {
+    padding: 6px 12px;
+    border: 1px solid var(--gold-dark);
+    border-radius: 4px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    background: white;
+    color: var(--text-dark);
+}
+
+.password-submit,
+.logout-button {
+    padding: 6px 12px;
+    background: var(--gold-primary);
+    color: var(--text-dark);
+    border: none;
+    border-radius: 4px;
+    font-family: var(--font-title);
+    font-weight: 600;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.password-submit:hover,
+.logout-button:hover {
+    background: var(--gold-bright);
+}
+
+.upload-controls {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.file-input {
+    display: none;
+}
+
+.file-label {
+    padding: 6px 12px;
+    background: var(--gold-primary);
+    color: var(--text-dark);
+    border-radius: 4px;
+    font-family: var(--font-title);
+    font-weight: 600;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background 0.2s;
+    display: inline-block;
+}
+
+.file-label:hover {
+    background: var(--gold-bright);
+}
+
+.file-label.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.error-message {
+    margin-top: 8px;
+    padding: 6px;
+    background: rgba(214, 48, 49, 0.2);
+    color: var(--fire-red);
+    border-radius: 4px;
+    font-size: 12px;
+    font-family: var(--font-body);
 }
 

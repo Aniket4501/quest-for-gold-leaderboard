@@ -23,24 +23,26 @@ function LeaderboardTable({ participants = [] }) {
   return (
     <section className="leaderboard-section">
       <div className="leaderboard-panel">
-        {/* Header Row */}
+        {/* Header Row - Fixed */}
         <div className="leaderboard-header leaderboard-row">
           <div className="leaderboard-rank">Rank</div>
           <div className="leaderboard-name">Explorer Name</div>
           <div className="leaderboard-coins">Total Gold Coins</div>
         </div>
         
-        {/* Data Rows */}
-        {participants.map((participant, index) => (
-          <div key={participant.rank || index} className="leaderboard-row">
-            <div className="leaderboard-rank">{participant.rank}</div>
-            <div className="leaderboard-name">{participant.username}</div>
-            <div className="leaderboard-coins">
-              <span className="coin-icon-small">🪙</span>
-              <span>{participant.coins}</span>
+        {/* Data Rows Container */}
+        <div className="leaderboard-body">
+          {participants.map((participant, index) => (
+            <div key={participant.rank || index} className="leaderboard-row">
+              <div className="leaderboard-rank">{participant.rank}</div>
+              <div className="leaderboard-name">{participant.username}</div>
+              <div className="leaderboard-coins">
+                <span className="coin-icon-small">🪙</span>
+                <span>{participant.coins}</span>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   )

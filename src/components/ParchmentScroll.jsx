@@ -27,22 +27,22 @@ function ParchmentScroll({ podiumData, leaderboardData, leader }) {
       {/* Decorative Elements (compass, hourglass) */}
       <DecorativeElements />
       
-      {/* Header Section */}
-      <Header />
+      {/* Section A: Top Section (Fixed height by content) */}
+      <div className="parchment-top-section">
+        <Header />
+        <Podium podiumData={podiumData} />
+      </div>
       
-      {/* Top-3 Podium Section */}
-      <Podium podiumData={podiumData} />
+      {/* Section B: Middle Section (Fixed height by content) */}
+      <div className="parchment-middle-section">
+        <LeaderBadge leader={leader} />
+      </div>
       
-      {/* Leader of the Day Badge */}
-      <LeaderBadge leader={leader} />
-      
-      {/* Leaderboard Table Section */}
-      <LeaderboardTable participants={leaderboardData} />
-      
-      {/* Gold Coins Section */}
-      <GoldCoins />
-      
-      {/* Future: CSV Upload Area (admin mode) will be added here */}
+      {/* Section C: Bottom Section (Flexible & Scrollable) */}
+      <div className="parchment-bottom-section">
+        <LeaderboardTable participants={leaderboardData} />
+        <GoldCoins />
+      </div>
     </div>
   )
 }
