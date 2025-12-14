@@ -20,9 +20,6 @@ function ParchmentScroll({ podiumData, leaderboardData, leader }) {
   return (
     <div 
       className="parchment-scroll"
-      style={{
-        backgroundImage: 'url(/assets/scroll.png)'
-      }}
     >
       {/* Decorative Elements (compass, hourglass) */}
       <DecorativeElements />
@@ -30,12 +27,11 @@ function ParchmentScroll({ podiumData, leaderboardData, leader }) {
       {/* Section A: Top Section (Fixed height by content) */}
       <div className="parchment-top-section">
         <Header />
-        <Podium podiumData={podiumData} />
+        <Podium podiumData={podiumData} leader={leader} />
       </div>
       
-      {/* Section B: Middle Section (Fixed height by content) */}
+      {/* Section B: Middle Section (Fixed height by content) - Empty now, badge is overlay */}
       <div className="parchment-middle-section">
-        <LeaderBadge leader={leader} />
       </div>
       
       {/* Section C: Bottom Section (Flexible & Scrollable) */}

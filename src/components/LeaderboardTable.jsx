@@ -1,4 +1,5 @@
 import React from 'react'
+import CoinIcon from './CoinIcon'
 
 /**
  * LeaderboardTable Component
@@ -37,7 +38,7 @@ function LeaderboardTable({ participants = [] }) {
               <div className="leaderboard-rank">{participant.rank}</div>
               <div className="leaderboard-name">{participant.username}</div>
               <div className="leaderboard-coins">
-                <span className="coin-icon-small">🪙</span>
+                <CoinIcon size={16} className="coin-icon-small" />
                 <span>{participant.coins}</span>
               </div>
             </div>

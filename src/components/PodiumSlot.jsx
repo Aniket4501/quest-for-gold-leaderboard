@@ -1,4 +1,5 @@
 import React from 'react'
+import CoinIcon from './CoinIcon'
 
 /**
  * PodiumSlot Component
@@ -15,7 +16,7 @@ import React from 'react'
  * - Rank changes will trigger celebration effects
  * - Sound effects will play on updates
  */
-function PodiumSlot({ rank, username, coins }) {
+function PodiumSlot({ rank, username, coins, children }) {
   const getPodiumClass = () => {
     switch (rank) {
       case 1:
@@ -48,10 +49,11 @@ function PodiumSlot({ rank, username, coins }) {
       data-rank={rank}
     >
       <div className={`podium-card ${getPodiumBaseClass()}`}>
+        {children}
         <div className="podium-rank">{rank}</div>
         <div className="podium-name">{username}</div>
         <div className="podium-coins">
-          <span className="coin-icon">🪙</span>
+          <CoinIcon size={18} className="coin-icon" />
           <span className="coin-count">{coins}</span>
         </div>
       </div>

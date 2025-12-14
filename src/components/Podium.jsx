@@ -18,7 +18,9 @@ import { usePodiumAnimation } from '../hooks/useAnimations'
  * - Will trigger animations on data updates
  * - Will play celebration sounds when leader changes
  */
-function Podium({ podiumData }) {
+import LeaderBadge from './LeaderBadge'
+
+function Podium({ podiumData, leader }) {
   const podiumRef = useRef(null)
   const { triggerPodiumEntry } = usePodiumAnimation()
 
@@ -31,6 +33,7 @@ function Podium({ podiumData }) {
 
   // Ensure we have exactly 3 participants
   const topThree = podiumData.slice(0, 3)
+  const rankOne = topThree.find(p => p.rank === 1)
 
   return (
     <section className="podium-section" ref={podiumRef}>
@@ -41,7 +44,11 @@ function Podium({ podiumData }) {
             rank={participant.rank}
             username={participant.username}
             coins={participant.coins}
-          />
+          >
+            {participant.rank === 1 && rankOne && (
+              <LeaderBadge leader={rankOne} />
+            )}
+          </PodiumSlot>
         ))}
       </div>
     </section>

@@ -44,7 +44,7 @@ function LeaderBadge({ leader }) {
         className="leader-badge"
         ref={badgeRef}
       >
-        <span className="badge-icon">🔥</span>
+        <span className="badge-icon">👑</span>
         <span className="badge-text">Leader of the Day</span>
       </div>
     </div>
